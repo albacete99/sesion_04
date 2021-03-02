@@ -1,0 +1,45 @@
+---
+- name: "Creación de usuarios"
+  hosts: nodos
+  vars_files:
+    vars/usuarios.yml
+  tasks:
+    - name: "Creación del usuario {{ usuarios['sergio']['nombre'] }}"
+      user:
+        name: "{{ usuarios['sergio']['nombre']  }}"
+        uid:  "{{ usuarios['sergio']['indentificador']  }}"
+        home: "{{ usuarios['sergio']['directorio_home'] }}"
+        state:  present
+    - name: "Añadir al fichero sudoers"
+      lineinfile:
+        path: "{{ directorio_sudoers['ruta'] }}"
+        line: "ansible ALL=(ALL) NOPASSWD: ALL"
+        create: yes
+        insertafter: "^root ALL=(ALL:ALL) ALL"
+    - name: "Mensaje por pantalla"
+      debug:
+        msg: "El usuario se ha creado correctamente"
+
+- name: "Creación de usuarios"
+  hosts: nodos
+  vars_files:
+    vars/usuarios.yml
+  tasks:
+    - name: "Creación del usuario {{ usuarios['oracle']['nombre'] }}"
+      user:
+        name: "{{ usuarios['oracle']['nombre']  }}"
+        uid:  "{{ usuarios['oracle']['indentificador']  }}"
+        home: "{{ usuarios['oracle']['directorio'] }}"
+        state:  present
+    - name: "Añadir al fichero sudoers"
+      lineinfile:
+        path: "{{ directorio_sudoers['ruta'] }}"
+        line: "ansible ALL=(ALL) NOPASSWD: ALL"
+        create: yes
+        insertafter: "^root ALL=(ALL:ALL) ALL"
+    - name: "Mensaje por pantalla"
+      debug:
+        msg: "El usuario se ha creado correctamente"
+- name: "Copiar el nombre del servidor"
+  hosts: master
+...

@@ -1,0 +1,32 @@
+---
+- name: "Creación de usuarios"
+  hosts: nodos
+  tasks:
+    - name: "Creación del usuario ansible"
+      user:
+        name: ansible
+        uid:  1100
+        state:  present
+    - name: "Añadir al fichero sudoers"
+      lineinfile:
+        path: "/etc/sudoers"
+        line: "ansible ALL=(ALL) NOPASSWD: ALL"
+        create: yes
+        insertafter: "^root ALL=(ALL:ALL) ALL"
+    - name: "Mensaje por pantalla"
+      debug:
+        msg: "El usuario se ha creado correctamente"
+- name: "Copiar el nombre del servidor"
+  hosts: master
+  tasks:
+    - name: "Copiar el fichero que contiene el nombre"
+      copy:
+        src: "/usr/bin/hostname"
+        dest: "/tmp"
+        owner: ansible
+        group: ansible
+        mode: 0655  
+    - name: "Mensaje por pantalla"
+      debug:
+        msg: "Se ha realizado la copia del fichero hostname"
+...

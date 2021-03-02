@@ -1,0 +1,12 @@
+usuarios:
+  oracle:
+    nombre: "oracle"
+    indentificador:  "3000"
+    directorio_home: /home/oracle
+    directorio: /home/oracle
+  sergio:
+    nombre: "sergio"
+    indentificador:  "1976"
+    directorio_home: /home/sergio
+directorio_sudoers:
+  ruta: /etc/sudoers
